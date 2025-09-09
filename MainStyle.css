@@ -1,0 +1,22 @@
+body {
+  background-color: rgb(95,37,159);
+}
+
+.club{
+    margin: 10px;
+}
+
+.crop {
+    width: 128px;
+    height: 128px;
+    overflow: hidden;
+    border-style: groove;
+    border-color: black;
+    color: black 
+}
+
+.crop img {
+    width: 400px;
+    height: 300px;
+    margin: -75px 0 0 -100px;
+}
