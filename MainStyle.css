@@ -4,19 +4,27 @@ body {
 
 .club{
     margin: 10px;
+    float: left;
+    display: block;
+    width: 128px;
+    height: 128px;
+    border-style: groove;
+    border-color: black;
+    
 }
 
 .crop {
+    /*for now makes the picture the full size of the club element
+    later this will change to better format the club*/
     width: 128px;
     height: 128px;
+   
     overflow: hidden;
-    border-style: groove;
-    border-color: black;
     color: black 
 }
 
 .crop img {
     width: 400px;
-    height: 300px;
+    height: 400px;
     margin: -75px 0 0 -100px;
 }

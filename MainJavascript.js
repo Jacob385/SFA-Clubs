@@ -2,7 +2,7 @@ const ImageAPILink = "https://sfasu-cdn.presence.io/organization-photos/8317246b
 const APILink = "https://api.presence.io/sfasu/v1/organizations"
 
 function update() {
-  
+    document.getElementById("clubList").innerHTML = "";
     const clubData = JSON.parse(GetAPIJson(APILink));
     clubData.forEach(createClub)
 
@@ -28,7 +28,7 @@ function createClub(club,index){
     link.appendChild(clubPic);
 
     //put div on page
-    document.body.appendChild(clubElement);   
+    document.getElementById("clubList").appendChild(clubElement);   
 }
    
     
