@@ -1,0 +1,63 @@
+
+.button {
+  background: var(--sfapurple);
+  color: var(--white);
+  border: none;
+  padding: .7rem 1.1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: .2s;
+  font-weight: 700;
+}
+.button:hover {
+  background: var(--sfapurple-light);
+}
+.button-secondary {
+  background: var(--sfagold);
+  color: #222;
+}
+.button-secondary:hover {
+  background: #e5b325;
+}
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+}
+.spinner {
+  border: 4px solid var(--medium-gray);
+  border-top: 4px solid var(--sfapurple);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0); }
+  100% { transform: rotate(360deg); }
+}
+.error-message {
+  background: #ffebee;
+  color: var(--error);
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.success-message {
+  background: #e8f5e9;
+  color: var(--success);
+  padding: 1rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.recommendation-badge {
+  background: var(--success);
+  color: #fff;
+  padding: .2rem .45rem;
+  border-radius: 4px;
+  font-size: .75rem;
+  margin-left: .5rem;
+}

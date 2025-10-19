@@ -1,0 +1,22 @@
+/* .tabs{ display:flex; gap:1rem; margin-bottom:1rem; }
+.tab{ padding:.5rem 1rem; border-bottom:2px solid transparent; background:transparent; color:var(--dark); cursor:pointer; }
+.tab.active{ border-bottom-color:var(--sfagold); color:var(--sfapurple); font-weight:700; } */
+
+
+
+
+.nav-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.tab {
+  padding: .5rem 1rem;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.tab.active {
+  border-bottom: 2px solid var(--sfagold);
+  color: var(--sfapurple);
+  font-weight: 700;
+}

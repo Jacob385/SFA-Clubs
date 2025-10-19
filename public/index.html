@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SFA Organization Finder</title>
+
+  <!-- Link modular CSS files -->
+  <link rel="stylesheet" href="../src/styles/base.css" />
+  <link rel="stylesheet" href="../src/styles/layout.css" />
+  <link rel="stylesheet" href="../src/styles/utilities.css" />
+  <link rel="stylesheet" href="../src/styles/components/tabs.css" />
+  <link rel="stylesheet" href="../src/styles/components/filters.css" />
+  <link rel="stylesheet" href="../src/styles/components/cards.css" />
+  <link rel="stylesheet" href="../src/styles/components/modal.css" />
+  <link rel="stylesheet" href="../src/styles/components/questionnaire.css" />
+</head>
+<body>
+  <header>
+    <div class="logo"><h1>SFA Organization Finder</h1></div>
+    <div>
+      <button id="takeSurveyBtn" class="button button-secondary">Take Survey</button>
+      <button id="refreshDataBtn" class="button">Refresh Data</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="nav-tabs">
+      <div class="tab active" data-tab="browse">Browse Organizations</div>
+      <div class="tab" data-tab="recommendations">Recommended For You</div>
+    </div>
+
+    <div class="main-content">
+      <div class="filters-panel">
+        <h2>Filters</h2>
+        <input type="text" id="searchInput" class="search-box" placeholder="Search organizations..."/>
+
+        <div class="filter-group">
+          <h3>Categories</h3>
+          <div class="filter-options" id="categoryFilters"></div>
+        </div>
+
+        <div class="filter-group">
+          <h3>Organization Size</h3>
+          <div class="filter-options" id="sizeFilters">
+            <label class="filter-checkbox"><input type="checkbox" value="large"/> Large (50 +)</label>
+            <label class="filter-checkbox"><input type="checkbox" value="medium"/> Medium (20 - 50)</label>
+            <label class="filter-checkbox"><input type="checkbox" value="small"/> Small (&lt; 20)</label>
+          </div>
+        </div>
+
+        <button id="applyFiltersBtn" class="button">Apply Filters</button>
+        <button id="clearFiltersBtn" class="button button-secondary">Clear Filters</button>
+      </div>
+
+      <div id="clubsContainer" class="clubs-grid">
+        <div class="loading"><div class="spinner"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Detail Modal -->
+  <div id="clubDetailModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <div id="clubDetailContent"></div>
+    </div>
+  </div>
+
+  <!-- Questionnaire Modal -->
+  <div id="questionnaireModal" class="questionnaire-modal">
+    <div class="questionnaire-content">
+      <span class="close-modal">&times;</span>
+      <h2>Find Your Perfect Organization Match</h2>
+      <p>Answer these 10 questions for personalized recommendations.</p>
+      <div class="progress"><div id="progressBar"></div></div>
+
+      <div id="questionnaire">
+        <!-- Q1 -->
+        <div class="question" id="q1">
+          <h3>1. What are your primary interests? <small>(Select all that apply)</small></h3>
+          <div class="options-grid" data-multi="true">
+            <div class="option-card" data-value="Professional/Academic/Honor Society">Academics & Professional Development</div>
+            <div class="option-card" data-value="Special Interest">Arts & Performance</div>
+            <div class="option-card" data-value="Cultural">Culture & Identity</div>
+            <div class="option-card" data-value="Sport Club">Sports & Recreation</div>
+            <div class="option-card" data-value="Religious/Faith Based">Religion & Faith</div>
+            <div class="option-card" data-value="Advocacy/Service">Community Service & Advocacy</div>
+            <div class="option-card" data-value="Fraternity & Sorority">Greek Life</div>
+            <div class="option-card" data-value="Special Interest">Outdoors & Nature</div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question" id="q2" style="display:none">
+          <h3>2. What is your field of study or academic interest?</h3>
+          <p class="subtext">Example: Biology, Business, Nursing, Agriculture, Education, Aviation, Theatre…</p>
+          <input type="text" id="academicFocus" class="text-input" placeholder="Type your field(s) of study"/>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question" id="q3" style="display:none">
+          <h3>3. What kind of activities are you most interested in?</h3>
+          <div class="options-grid" data-multi="true">
+            <div class="option-card" data-value="hands-on">Hands-on Projects & Building</div>
+            <div class="option-card" data-value="social-meetings">Attending Social Events & Meetings</div>
+            <div class="option-card" data-value="compete-travel">Competing & Traveling</div>
+            <div class="option-card" data-value="volunteer">Volunteering & Community Service</div>
+            <div class="option-card" data-value="networking">Networking & Professional Development</div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question" id="q4" style="display:none">
+          <h3>4. Are you interested in cultural or identity-based organizations?</h3>
+          <div class="options-grid" data-multi="true">
+            <div class="option-card" data-value="african">African American/Black</div>
+            <div class="option-card" data-value="latino">Hispanic/Latino</div>
+            <div class="option-card" data-value="asian">Asian</div>
+            <div class="option-card" data-value="lgbtq">LGBTQ+</div>
+            <div class="option-card" data-value="international">International</div>
+            <div class="option-card" data-value="none">Not specifically</div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question" id="q5" style="display:none">
+          <h3>5. How important is religious or spiritual affiliation?</h3>
+          <div class="options-grid" data-multi="false">
+            <div class="option-card" data-value="very">Very Important</div>
+            <div class="option-card" data-value="somewhat">Somewhat Important</div>
+            <div class="option-card" data-value="not">Not Important</div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question" id="q6" style="display:none">
+          <h3>6. What size organization do you prefer?</h3>
+          <div class="options-grid" data-multi="false">
+            <div class="option-card" data-value="large">Large (50 + members)</div>
+            <div class="option-card" data-value="medium">Medium (20 - 50 members)</div>
+            <div class="option-card" data-value="small">Small & Tight - Knit (&lt;20)</div>
+            <div class="option-card" data-value="none">No Preference</div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question" id="q7" style="display:none">
+          <h3>7. Are you interested in joining a Fraternity or Sorority?</h3>
+          <div class="options-grid" data-multi="false">
+            <div class="option-card" data-value="yes">Yes, definitely</div>
+            <div class="option-card" data-value="maybe">Maybe, I’m curious</div>
+            <div class="option-card" data-value="no">No</div>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question" id="q8" style="display:none">
+          <h3>8. Preferred meeting structure?</h3>
+          <div class="options-grid" data-multi="false">
+            <div class="option-card" data-value="regular">Regular Meetings</div>
+            <div class="option-card" data-value="event">Event - Based & Social</div>
+            <div class="option-card" data-value="any">No Preference</div>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question" id="q9" style="display:none">
+          <h3>9. What cause are you most passionate about?</h3>
+          <div class="options-grid" data-multi="false">
+            <div class="option-card" data-value="environment">Environmental Conservation</div>
+            <div class="option-card" data-value="health">Health & Wellness</div>
+            <div class="option-card" data-value="education">Education & Mentorship</div>
+            <div class="option-card" data-value="justice">Social Justice & Awareness</div>
+            <div class="option-card" data-value="arts">The Arts</div>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question" id="q10" style="display:none">
+          <h3>10. What are you hoping to get out of joining an organization? <small>(Select all that apply)</small></h3>
+          <div class="options-grid" data-multi="true">
+            <div class="option-card" data-value="career">Career Skills & Networking</div>
+            <div class="option-card" data-value="leadership">Leadership Experience</div>
+            <div class="option-card" data-value="friends">Friendship & Community</div>
+            <div class="option-card" data-value="creative">A Creative Outlet</div>
+            <div class="option-card" data-value="giveback">A Way to Give Back</div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; gap:.5rem; margin-top:.5rem">
+          <button id="prevQuestion" class="button button-secondary" style="display:none">Previous</button>
+          <div style="display:flex; gap:.5rem; margin-left:auto">
+            <button id="nextQuestion" class="button">Next</button>
+            <button id="submitQuestionnaire" class="button" style="display:none">Get Recommendations</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="../src/index.js"></script>
+</body>
+</html>

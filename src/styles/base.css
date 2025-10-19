@@ -1,0 +1,23 @@
+:root {
+  --sfapurple: #50007D;
+  --sfapurple-light: #7E3FA3;
+  --sfagold: #FFC72C;
+  --white: #FFFFFF;
+  --light-gray: #F5F5F5;
+  --medium-gray: #E0E0E0;
+  --dark-gray: #333333;
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --error: #F44336;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background: var(--light-gray);
+  color: var(--dark-gray);
+  line-height: 1.6;
+}
