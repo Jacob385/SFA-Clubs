@@ -61,3 +61,64 @@
   font-size: .75rem;
   margin-left: .5rem;
 }
+
+
+
+
+
+/* === Match Indicator === */
+/* NEW: Professional match percentage badges with ranking-based color coding */
+.match-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.match-indicator::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+  background: currentColor;
+}
+
+/* Color scheme based on RELATIVE RANKING (not absolute percentages):
+   - Green: Top 25% of matches (excellent)
+   - Blue: Top 50% of matches (good) 
+   - Yellow: Top 75% of matches (fair)
+   - Red: Bottom 25% of matches (low) */
+.match-indicator.excellent {
+  background: linear-gradient(135deg, #4caf50, #66bb6a);
+  color: white;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.match-indicator.good {
+  background: linear-gradient(135deg, #2196f3, #42a5f5);
+  color: white;
+  box-shadow: 0 2px 8px rgba(33, 150, 243, 0.3);
+}
+
+.match-indicator.fair {
+  background: linear-gradient(135deg, #ffc107, #ffca28);
+  color: #333; /* Dark text for better readability on yellow background */
+  box-shadow: 0 2px 8px rgba(255, 193, 7, 0.3);
+}
+
+.match-indicator.low {
+  background: linear-gradient(135deg, #f44336, #ef5350);
+  color: white;
+  box-shadow: 0 2px 8px rgba(244, 67, 54, 0.3);
+}
