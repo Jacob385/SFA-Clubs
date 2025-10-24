@@ -4,9 +4,8 @@ import { escapeHtml } from '../utils/sanitize.js';
 // API endpoint for organization images
 const ImageAPILink = "https://sfasu-cdn.presence.io/organization-photos/8317246b-60de-41af-9823-4a35504099d4/";
 
-/**
- * Format description for card view - extract first meaningful section
- */
+
+//Format description for card view - extract first meaningful section
 function formatDescriptionForCard(description) {
   if (!description) return 'No description available.';
   
