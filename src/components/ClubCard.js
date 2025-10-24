@@ -16,12 +16,16 @@ function formatDescriptionForCard(description) {
   cleanDesc = cleanDesc
     // Add space after colons that are followed by a capital letter
     .replace(/([A-Z][^:]*):([A-Z])/g, '$1: $2')
+
     // Add space after periods that are followed by a capital letter
     .replace(/([a-z])\.([A-Z])/g, '$1. $2')
+
     // Fix missing spaces in "Social and recreational activities:"
     .replace(/Social and recreational activities:/g, 'Social and Recreational Activities:')
+
     // Ensure proper spacing around colons
     .replace(/:\s*/g, ': ')
+
     // Clean up any double spaces
     .replace(/\s+/g, ' ')
     .trim();
@@ -60,16 +64,21 @@ export function createClubCard(org, includeScore = false, rankInfo = null) {
   const imageUrl = org.photoUri ? (ImageAPILink + org.photoUri) : 'placeholder.jpg';
 
   let nameHtml = `<h3 class="club-name">${escapeHtml(org.name)}`;
-  if (includeScore && org.score !== undefined) {
+  if (includeScore && org.score !== undefined) 
+    {
     // Calculate match percentage based on a more realistic maximum score
     // This percentage is still displayed to users for reference
-    const maxPossibleScore = 400; // Conservative estimate for excellent matches
+
+     // Conservative estimate for excellent matches
+    const maxPossibleScore = 400;
     const matchPercentage = Math.min(Math.round((org.score / maxPossibleScore) * 100), 100);
     
-    // NEW: Determine color based on RELATIVE RANKING instead of absolute percentage
+   
     // This ensures the highest scoring organizations are always green, regardless of actual percentage
     let matchLevel = 'low';
-    if (rankInfo && rankInfo.rank && rankInfo.totalCount) {
+    if (rankInfo && rankInfo.rank && rankInfo.totalCount)
+      
+      {
       // rankInfo contains: { rank: 1, 2, 3... totalCount: total number of organizations }
       const { rank, totalCount } = rankInfo;
       
@@ -94,8 +103,7 @@ export function createClubCard(org, includeScore = false, rankInfo = null) {
         }
       }
     } else {
-      // Fallback to percentage-based coloring if no rank info is provided
-      // This maintains backward compatibility for non-recommendation views
+      // Fallback to percentage-based coloring if no rank info is provided. This maintains backward compatibility for non-recommendation views
       matchLevel = matchPercentage >= 90 ? 'excellent' : matchPercentage >= 80 ? 'good' : matchPercentage >= 70 ? 'fair' : 'low';
     }
     
