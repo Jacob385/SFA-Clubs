@@ -95,7 +95,31 @@
         <div class="question" id="q2" style="display:none">
           <h3>2. What is your field of study or academic interest?</h3>
           <p class="subtext">Example: Biology, Business, Nursing, Agriculture, Education, Aviation, Theatre…</p>
-          <input type="text" id="academicFocus" class="text-input" placeholder="Type your field(s) of study"/>
+          <!-- <input type="text" id="academicFocus" class="text-input" placeholder="Type your field(s) of study"/>-->
+          <select id="academicFocus" onchange="show(this)" class="dropdown">
+            <option value="">-- Select --</option>
+          </select>
+          <script>
+            async function populateSelect() {
+              try {
+                const response = await fetch('../src/questionnaire/MajorsForQ.js');
+                if (!response.ok) throw new Error('Network response was not ok');
+
+                const json = await response.json();
+                const ele = document.getElementById('academicFocus');
+                json.forEach(json => {
+                  const option = document.createElement('option');
+                  option.value = json.Name;
+                  option.textContent = json.Name;
+                  ele.appendChild(option);
+                });
+              } catch (error) {
+                console.error('Error fetching JSON:', error);
+              }
+            }
+
+            populateSelect();
+          </script>
         </div>
 
         <!-- Q3 -->
