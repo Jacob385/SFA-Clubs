@@ -3,7 +3,7 @@ import { setupTabs } from './components/Tabs.js';
 import { setupFilterPanel } from './components/FilterPanel.js';
 import { loadStoredPreferences } from './stores/preferences.js';
 import { state } from './stores/state.js';
-import { showQuestion, attachOptionHandlers, nextQuestion, prevQuestion, submitQuestionnaire } from './questionnaire/Questionnaire.js';
+import { showQuestion, attachOptionHandlers, nextQuestion, prevQuestion, submitQuestionnaire, clearSurveyForm } from './questionnaire/Questionnaire.js';
 import { displayOrganizations } from './components/ClubsGrid.js';
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,10 +47,18 @@ takeSurveyBtn.addEventListener('click', () => {
 
 //  Refresh Data: clear recs + switch to Browse + reload orgs
 document.getElementById('refreshDataBtn').addEventListener('click', () => {
-  // Clear all survey/recommendation data
+  // Clear all survey/recommendation data from localStorage
   localStorage.removeItem('recommendations');
   localStorage.removeItem('surveyResponses');
   localStorage.removeItem('surveyCompleted');
+
+  // Clear the survey form (inputs, selections, etc.)
+  clearSurveyForm();
+
+  // Close questionnaire modal if it's open
+  if (questionnaireModal) {
+    questionnaireModal.style.display = 'none';
+  }
 
   // Switch tab UI to "Browse Organizations"
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));

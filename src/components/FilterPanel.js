@@ -73,4 +73,14 @@ export function setupFilterPanel() {
   searchInput.addEventListener('input', debounce(applyFilters, 300));
   applyFiltersBtn.addEventListener('click', applyFilters);
   clearFiltersBtn.addEventListener('click', clearFilters);
+
+  // Mobile filters toggle
+  const filtersToggle = document.getElementById('filtersToggle');
+  const filtersPanel = document.querySelector('.filters-panel');
+  
+  if (filtersToggle && filtersPanel) {
+    filtersToggle.addEventListener('click', () => {
+      filtersPanel.classList.toggle('collapsed');
+    });
+  }
 }

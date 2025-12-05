@@ -1,6 +1,7 @@
 import { state } from '../stores/state.js';
 import { calculateScore } from '../recommendations/scoring.js';
 import { displayRecommendations } from '../components/ClubsGrid.js';
+import { initAcademicFocusAutocomplete, loadDegrees } from './autocomplete.js';
 
 const prevQuestionBtn = document.getElementById('prevQuestion');
 const nextQuestionBtn = document.getElementById('nextQuestion');
@@ -59,6 +60,16 @@ export function showQuestion(n) {
   submitQuestionnaireBtn.style.display = n === 10 ? 'block' : 'none';
   const pct = Math.round((n - 1) / 9 * 100);
   progressBar.style.width = pct + '%';
+  
+  // Initialize autocomplete when showing question 2
+  if (n === 2) {
+    // Small delay to ensure DOM is ready
+    setTimeout(() => {
+      loadDegrees().then(() => {
+        initAcademicFocusAutocomplete();
+      });
+    }, 100);
+  }
 }
 
 export function nextQuestion() {
@@ -132,4 +143,39 @@ export function submitQuestionnaire() {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.querySelector('[data-tab="recommendations"]').classList.add('active');
   displayRecommendations();
+}
+
+// Clear all survey form data and reset to initial state
+export function clearSurveyForm() {
+  // Clear all selected option cards
+  document.querySelectorAll('#questionnaire .option-card.selected').forEach(card => {
+    card.classList.remove('selected');
+  });
+
+  // Clear the academic focus input
+  const academicFocusInput = document.getElementById('academicFocus');
+  if (academicFocusInput) {
+    academicFocusInput.value = '';
+    // Clear autocomplete initialization flag to allow re-initialization
+    delete academicFocusInput.dataset.autocompleteInitialized;
+  }
+
+  // Close autocomplete dropdown if open
+  const autocompleteDropdown = document.getElementById('academicFocusAutocomplete');
+  if (autocompleteDropdown) {
+    autocompleteDropdown.classList.remove('show');
+    autocompleteDropdown.innerHTML = '';
+  }
+
+  // Reset state
+  state.currentQuestion = 1;
+  state.surveyResponses = {};
+
+  // Reset progress bar
+  if (progressBar) {
+    progressBar.style.width = '0%';
+  }
+
+  // Reset to first question
+  showQuestion(1);
 }

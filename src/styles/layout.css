@@ -13,6 +13,7 @@ header {
 }
 .logo h1 {
   font-size: 1.4rem;
+  font-weight: 600;
 }
 .container {
   max-width: 1200px;
@@ -25,14 +26,120 @@ header {
   gap: 1.5rem;
   margin-top: 1rem;
 }
+
+/* Mobile Responsive Styles */
 @media (max-width: 768px) {
+  /* Header adjustments */
+  header {
+    padding: 0.75rem 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+  .logo h1 {
+    font-size: 1.1rem;
+    flex: 1;
+    min-width: 0;
+  }
+  header > div {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  header .button {
+    flex: 1;
+    min-width: 120px;
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  /* Container padding */
+  .container {
+    padding: 0.75rem;
+  }
+
+  /* Main content - single column */
   .main-content {
     grid-template-columns: 1fr;
+    gap: 1rem;
+    margin-top: 0.75rem;
   }
+
+  /* Filters panel - collapsible on mobile */
   .filters-panel {
-    position: sticky;
-    top: 80px;
-    z-index: 90;
+    position: relative;
+    margin-bottom: 1rem;
+  }
+  .filters-panel.collapsed {
+    max-height: 60px;
+    overflow: hidden;
+  }
+  .filters-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--sfapurple);
+    color: var(--white);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+  }
+  .filters-toggle::after {
+    content: '▼';
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+  }
+  .filters-panel.collapsed .filters-toggle::after {
+    transform: rotate(-90deg);
+  }
+  .filters-content {
+    transition: max-height 0.3s ease;
+    overflow: hidden;
+  }
+  .filters-panel.collapsed .filters-content {
+    max-height: 0;
+    padding: 0;
+  }
+
+  /* Tabs - full width on mobile */
+  .nav-tabs {
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .nav-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .tab {
+    padding: 0.6rem 1rem;
+    white-space: nowrap;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 0.6rem 0.75rem;
+  }
+  .logo h1 {
+    font-size: 1rem;
+  }
+  header > div {
+    flex-direction: column;
+  }
+  header .button {
+    width: 100%;
+    min-width: unset;
+  }
+  .container {
+    padding: 0.5rem;
   }
 }
 
